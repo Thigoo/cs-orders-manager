@@ -1,5 +1,6 @@
 import App from "@/App";
 import { MainView } from "@/views/MainView.view";
+import { OrdersView } from "@/views/orders/orders.view";
 import { createBrowserRouter } from "react-router-dom";
 
 export const router = createBrowserRouter([
@@ -10,6 +11,12 @@ export const router = createBrowserRouter([
       {
         path: "",
         element: <MainView />,
+        children: [
+          {
+            path: "/orders",
+            element: <OrdersView />,
+          },
+        ],
       },
     ],
   },

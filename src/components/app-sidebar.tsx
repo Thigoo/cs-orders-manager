@@ -11,21 +11,24 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { Link } from "react-router-dom";
+
+type TMenuData = {
+  title: string;
+  to: string;
+}[];
 
 // This is sample data.
-const data = {
-  navMain: [
-    {
-      url: "#",
-      items: [
-        {
-          title: "Orders",
-          url: "#",
-        },
-      ],
-    },
-  ],
-};
+const menuData: TMenuData = [
+  {
+    title: "Orders",
+    to: "/orders",
+  },
+  {
+    title: "Products",
+    to: "/products",
+  },
+];
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -37,17 +40,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         {/* We create a SidebarGroup for each parent. */}
-        {data.navMain.map((item) => (
+        {menuData.map((item) => (
           <SidebarGroup>
             <SidebarGroupContent>
               <SidebarMenu>
-                {item.items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild>
-                      <a href={item.url}>{item.title}</a>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <Link to={item.to}>{item.title}</Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
