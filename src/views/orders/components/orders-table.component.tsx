@@ -9,7 +9,11 @@ import {
 import { Search } from "lucide-react";
 import { IOrder } from "../orders.view";
 
-export const OrdersTable = ({ orders }: { orders: IOrder[] }) => {
+interface IOrdersTableProps {
+  orders: IOrder[];
+}
+
+export const OrdersTable = ({ orders }: IOrdersTableProps) => {
   return (
     <Table>
       <TableHeader className="bg-neutral-100">
