@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { OrdersTable } from "./components/orders-table.component";
+import { Link } from "react-router-dom";
 
 export interface IOrder {
   id: number;
@@ -30,7 +31,9 @@ export const OrdersView = () => {
     <div>
       <div className="flex justify-between items-center py-6">
         <h1>Orders</h1>
+        <Link to={"/orders/new-order"}>
           <Button>Create Order</Button>
+        </Link>
       </div>
 
       <OrdersTable orders={orders} />
