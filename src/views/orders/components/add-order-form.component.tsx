@@ -1,11 +1,19 @@
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Label } from '@radix-ui/react-label';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Button } from '@/components/ui/button';
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Label } from "@radix-ui/react-label";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const orderSchema = z.object({
   customer: z.string().min(2, "Customer name is required"),
@@ -20,6 +28,7 @@ const orderSchema = z.object({
 type OrderFormValues = z.infer<typeof orderSchema>;
 
 export const AddOrderForm = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -32,14 +41,20 @@ export const AddOrderForm = () => {
     },
   });
 
-  const onSubmit = (data: OrderFormValues) => {
-    console.log("Order Created:", data);
+  const onSubmit = async (data: OrderFormValues) => {
+    try {
+      const response = await axios.post("http://localhost:3001/orders", data);
+      console.log("Order created:", response.data);
+    } catch (error) {
+      console.error("Error creating order:", error);
+    } finally {
+      navigate("/orders");
+    }
   };
 
   return (
     <Card className="max-w-md mx-auto border-none shadow-none">
-      <CardHeader>
-      </CardHeader>
+      <CardHeader></CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Customer Name */}

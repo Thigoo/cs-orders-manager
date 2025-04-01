@@ -1,13 +1,45 @@
 {
-    "orders": [{
-        "id": 1,
-        "customer": "John Doe",
-        "product": "Product A",
-        "quantity": 2,
-        "theme": "Moana",
-        "amount": 100,
-        "date": "2023-01-01",
-        "status": "Paid",
-        "prodStatus": true
-    }]
+  "orders": [
+    {
+      "id": "1",
+      "customer": "John Doe",
+      "product": "Product A",
+      "quantity": 2,
+      "theme": "Moana",
+      "amount": 100,
+      "date": "2023-01-01",
+      "status": "Paid",
+      "prodStatus": true
+    },
+    {
+      "id": "a309",
+      "customer": "t1",
+      "product": "p1",
+      "quantity": 1,
+      "theme": "t1",
+      "amount": 1,
+      "date": "2025-04-01",
+      "status": "Pending"
+    },
+    {
+      "id": "14dd",
+      "customer": "c2",
+      "product": "p2",
+      "quantity": 2,
+      "theme": "t2",
+      "amount": 200,
+      "date": "2025-04-02",
+      "status": "Paid"
+    },
+    {
+      "id": "b5cc",
+      "customer": "c3",
+      "product": "p3",
+      "quantity": 3,
+      "theme": "t3",
+      "amount": 300,
+      "date": "2025-04-03",
+      "status": "Shipped"
+    }
+  ]
 }

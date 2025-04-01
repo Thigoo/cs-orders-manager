@@ -41,7 +41,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         {/* We create a SidebarGroup for each parent. */}
         {menuData.map((item) => (
-          <SidebarGroup>
+          <SidebarGroup key={item.title}>
             <SidebarGroupContent>
               <SidebarMenu>
                 <SidebarMenuItem key={item.title}>
