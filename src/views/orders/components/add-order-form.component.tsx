@@ -14,6 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const orderSchema = z.object({
   customer: z.string().min(2, "Customer name is required"),
@@ -28,6 +29,7 @@ const orderSchema = z.object({
 type OrderFormValues = z.infer<typeof orderSchema>;
 
 export const AddOrderForm = () => {
+  const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const {
     register,
@@ -43,11 +45,13 @@ export const AddOrderForm = () => {
 
   const onSubmit = async (data: OrderFormValues) => {
     try {
+      setLoading(true);
       const response = await axios.post("http://localhost:3001/orders", data);
       console.log("Order created:", response.data);
     } catch (error) {
       console.error("Error creating order:", error);
     } finally {
+      setLoading(false);
       navigate("/orders");
     }
   };
@@ -141,7 +145,7 @@ export const AddOrderForm = () => {
 
           {/* Submit Button */}
           <Button type="submit" className="w-full">
-            Create Order
+            {loading ? "Creating order..." : "Create Order"}
           </Button>
         </form>
       </CardContent>

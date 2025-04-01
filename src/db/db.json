@@ -40,6 +40,36 @@
       "amount": 300,
       "date": "2025-04-03",
       "status": "Shipped"
+    },
+    {
+      "id": "7d5f",
+      "customer": "c4",
+      "product": "p4",
+      "quantity": 4,
+      "theme": "t4",
+      "amount": 397,
+      "date": "2025-04-04",
+      "status": "Delivered"
+    },
+    {
+      "id": "6c4a",
+      "customer": "c5",
+      "product": "p5",
+      "quantity": 5,
+      "theme": "t5",
+      "amount": 500,
+      "date": "2025-04-05",
+      "status": "Pending"
+    },
+    {
+      "id": "4658",
+      "customer": "wef",
+      "product": "wef1234",
+      "quantity": 23,
+      "theme": "werf",
+      "amount": 233,
+      "date": "2025-05-01",
+      "status": "Shipped"
     }
   ]
 }

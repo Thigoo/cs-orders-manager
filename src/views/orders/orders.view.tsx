@@ -17,15 +17,21 @@ export interface IOrder {
 }
 export const OrdersView = () => {
   const [orders, setOrders] = useState<IOrder[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
   const API_URL: string = "http://localhost:3001";
 
   const getData = async () => {
     try {
+      setLoading(true);
       const { data } = await axios.get(`${API_URL}/orders`);
       setOrders(data);
       console.log(data);
     } catch (error) {
       console.log(error);
+    } finally {
+      setTimeout(() => {
+        setLoading(false);
+      }, 3000);
     }
   };
 
@@ -42,7 +48,7 @@ export const OrdersView = () => {
         </Link>
       </div>
 
-      <OrdersTable orders={orders} />
+      <OrdersTable orders={orders} loading={loading} />
     </div>
   );
 };
