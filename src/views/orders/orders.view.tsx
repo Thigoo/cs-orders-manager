@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
 import { OrdersTable } from "./components/orders-table.component";
 import { Link } from "react-router-dom";
 
@@ -14,25 +15,30 @@ export interface IOrder {
   prodStatus: boolean;
 }
 export const OrdersView = () => {
-  const orders: IOrder[] = [
-    {
-      id: 1,
-      customer: "John Doe",
-      product: "Product A",
-      quantity: 2,
-      theme: "Moana",
-      amount: 100,
-      date: "2023-01-01",
-      status: "Paid",
-      prodStatus: true,
-    },
-  ];
+  const [orders, setOrders] = useState<IOrder[]>([]);
+  const API_URL='http://localhost:3001'
+
+  const getData = async () => {
+    try {
+      const response = await fetch(`${API_URL}/orders`);
+      const data = await response.json();
+      setOrders(data);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
     <div>
       <div className="flex justify-between items-center py-6">
         <h1>Orders</h1>
         <Link to={"/orders/new-order"}>
-          <Button>Create Order</Button>
+          <Button onClick={getData}>Create Order</Button>
         </Link>
       </div>
 
