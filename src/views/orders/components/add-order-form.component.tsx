@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { Badge } from "@/components/ui/badge";
 
 const orderSchema = z.object({
   customer: z.string().min(2, "Customer name is required"),
@@ -132,10 +133,15 @@ export const AddOrderForm = () => {
                 <SelectValue placeholder="Select status" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="Pending">Pending</SelectItem>
-                <SelectItem value="Paid">Paid</SelectItem>
-                <SelectItem value="Shipped">Shipped</SelectItem>
-                <SelectItem value="Delivered">Delivered</SelectItem>
+                <SelectItem value="Pending">
+                  <Badge className="bg-yellow-500">Pending</Badge>
+                </SelectItem>
+                <SelectItem value="Paid">
+                  <Badge className="bg-green-500">Paid</Badge>
+                </SelectItem>
+                <SelectItem value="Signal">
+                  <Badge className="bg-red-500">Pending</Badge>
+                </SelectItem>
               </SelectContent>
             </Select>
             {errors.status && (

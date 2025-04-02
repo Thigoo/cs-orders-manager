@@ -13,7 +13,6 @@ export interface IOrder {
   amount: number;
   date: string;
   status: string;
-  prodStatus: boolean;
 }
 export const OrdersView = () => {
   const [orders, setOrders] = useState<IOrder[]>([]);
@@ -29,9 +28,7 @@ export const OrdersView = () => {
     } catch (error) {
       console.log(error);
     } finally {
-      setTimeout(() => {
-        setLoading(false);
-      }, 3000);
+      setLoading(false);
     }
   };
 
