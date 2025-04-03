@@ -1,6 +1,7 @@
 import App from "@/App";
 import { MainView } from "@/views/MainView.view";
-import { AddOrdersView } from "@/views/orders/components/add-orders.view";
+import { AddOrdersView } from "@/views/orders/add-orders.view";
+import { EditOrdersView } from "@/views/orders/edit-orders.view";
 import { OrdersView } from "@/views/orders/orders.view";
 import { createBrowserRouter } from "react-router-dom";
 
@@ -18,6 +19,7 @@ export const router = createBrowserRouter([
             element: <OrdersView />,
           },
           { path: "/orders/new-order", element: <AddOrdersView /> },
+          { path: "/orders/:id", element: <EditOrdersView /> },
         ],
       },
     ],

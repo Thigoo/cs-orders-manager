@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 export interface IOrder {
-  id: number;
+  id: string;
   customer: string;
   product: string;
   quantity: number;

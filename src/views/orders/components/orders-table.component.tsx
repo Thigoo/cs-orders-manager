@@ -11,6 +11,12 @@ import { Loading } from "./loading.component";
 import { Badge } from "@/components/ui/badge";
 import { getBadgeColor } from "../utils/get-badge-color";
 import { MoreHorizontal } from "lucide-react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Link } from "react-router-dom";
 
 interface IOrdersTableProps {
   orders: IOrder[];
@@ -58,7 +64,19 @@ export const OrdersTable = ({ orders, loading }: IOrdersTableProps) => {
                   </Badge>
                 </TableCell>
                 <TableCell>
-                  <MoreHorizontal />
+                  <Popover>
+                    <PopoverTrigger>
+                      <MoreHorizontal />
+                    </PopoverTrigger>
+                    <PopoverContent className="cursor-pointer p-2 w-40">
+                      <Link
+                        to={`/orders/${order.id}`}
+                        className="hover:bg-neutral-100 rounded px-2 w-full text-left text-sm p-1"
+                      >
+                        Edit
+                      </Link>
+                    </PopoverContent>
+                  </Popover>
                 </TableCell>
               </TableRow>
             ))}

@@ -12,26 +12,35 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
+import { useEffect } from "react";
 
 const orderSchema = z.object({
   customer: z.string().min(2, "Customer name is required"),
   product: z.string().min(2, "Product name is required"),
-  quantity: z.number().min(1, "Quantity must be at least 1"),
   theme: z.string().optional(),
-  amount: z.number().min(1, "Amount must be greater than 0"),
-  date: z.string().min(1, "Date is required"),
+  quantity: z.coerce.number().min(1, "Quantity must be at least 1"),
+  amount: z.coerce.number().min(1, "Amount must be greater than 0"),
+  date: z.coerce.date({
+    required_error: "Date is required",
+    invalid_type_error: "Invalid date format",
+  }),
   status: z.enum(["Pending", "Paid", "Shipped", "Delivered"]),
 });
 
-type OrderFormValues = z.infer<typeof orderSchema>;
+export type OrderFormValues = z.infer<typeof orderSchema>;
 
-export const AddOrderForm = () => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const navigate = useNavigate();
+interface IOrderFormProps {
+  initialData?: OrderFormValues;
+  onSubmit: (data: OrderFormValues) => void;
+  loading: boolean;
+}
+
+export const OrderForm = ({
+  initialData,
+  onSubmit,
+  loading,
+}: IOrderFormProps) => {
   const {
     register,
     handleSubmit,
@@ -39,23 +48,24 @@ export const AddOrderForm = () => {
     formState: { errors },
   } = useForm<OrderFormValues>({
     resolver: zodResolver(orderSchema),
-    defaultValues: {
+    defaultValues: initialData || {
+      customer: "",
+      product: "",
+      quantity: 1,
+      theme: "",
+      amount: 0,
+      date: new Date(),
       status: "Pending",
     },
   });
 
-  const onSubmit = async (data: OrderFormValues) => {
-    try {
-      setLoading(true);
-      const response = await axios.post("http://localhost:3001/orders", data);
-      console.log("Order created:", response.data);
-    } catch (error) {
-      console.error("Error creating order:", error);
-    } finally {
-      setLoading(false);
-      navigate("/orders");
+  useEffect(() => {
+    if (initialData) {
+      Object.entries(initialData).forEach(([key, value]) => {
+        setValue(key as keyof OrderFormValues, value);
+      });
     }
-  };
+  }, [initialData, setValue]);
 
   return (
     <Card className="max-w-md mx-auto border-none shadow-none">
@@ -151,7 +161,11 @@ export const AddOrderForm = () => {
 
           {/* Submit Button */}
           <Button type="submit" className="w-full">
-            {loading ? "Creating order..." : "Create Order"}
+            {loading
+              ? "Saving..."
+              : initialData
+                ? "Update Order"
+                : "Create Order"}
           </Button>
         </form>
       </CardContent>
