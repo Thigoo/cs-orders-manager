@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
 import { OrdersTable } from "./components/orders-table.component";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import { useOrders } from "@/hooks/use-orders";
+import { useEffect } from "react";
 
 export interface IOrder {
   id: string;
@@ -15,26 +15,11 @@ export interface IOrder {
   status: string;
 }
 export const OrdersView = () => {
-  const [orders, setOrders] = useState<IOrder[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const API_URL: string = "http://localhost:3001";
-
-  const getData = async () => {
-    try {
-      setLoading(true);
-      const { data } = await axios.get(`${API_URL}/orders`);
-      setOrders(data);
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { fetchOrders, orders, loading } = useOrders();
 
   useEffect(() => {
-    getData();
-  }, []);
+    fetchOrders();
+  }, [fetchOrders]);
 
   return (
     <div>
