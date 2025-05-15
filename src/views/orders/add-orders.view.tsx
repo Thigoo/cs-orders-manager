@@ -1,20 +1,14 @@
-import axios from "axios";
 import { OrderForm, OrderFormValues } from "./components/order-form.component";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useOrders } from "@/hooks/use-orders";
 
 export const AddOrdersView = () => {
-  const [loading, setLoading] = useState<boolean>(false);
+  const { submitOrder, loading } = useOrders();
   const navigate = useNavigate();
   const onSubmit = async (data: OrderFormValues) => {
     try {
-      setLoading(true);
-      const response = await axios.post("http://localhost:3001/orders", data);
-      console.log("Order created:", response.data);
-    } catch (error) {
-      console.error("Error creating order:", error);
+      await submitOrder(data);
     } finally {
-      setLoading(false);
       navigate("/orders");
     }
   };

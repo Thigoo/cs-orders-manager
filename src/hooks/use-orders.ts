@@ -1,4 +1,5 @@
-import { getOrders } from "@/services/order-service";
+import { createOrder, getOrders } from "@/services/order-service";
+import { OrderFormValues } from "@/views/orders/components/order-form.component";
 import { IOrder } from "@/views/orders/orders.view";
 import { useCallback, useState } from "react";
 
@@ -18,8 +19,21 @@ export const useOrders = () => {
         }
     }, []);
 
+    const submitOrder = useCallback(async (data: OrderFormValues) => {
+        try {
+            setLoading(true);
+            await createOrder(data);
+            fetchOrders();
+        } catch (error) {
+            console.log("Error creating order", error);
+        } finally {
+            setLoading(false);
+        }
+    }, [fetchOrders]);
+
     return {
         fetchOrders,
+        submitOrder,
         orders,
         loading
     }
