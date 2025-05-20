@@ -1,6 +1,6 @@
 import { ReactNode, useState } from "react";
 import { AuthContext } from "./AuthContext";
-import { registerUser } from "@/services/auth-service";
+import { ILoginData, loginUser, registerUser } from "@/services/auth-service";
 
 export interface IUser {
   name: string;
@@ -17,9 +17,23 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return localStorage.getItem('token');
   });
 
-  const login = async (username: string, password: string) => {
-    console.log('username ->', username);
-    console.log('password ->', password);    
+  const login = async (data: ILoginData) => {
+    const { email, password } = data;
+    if (!email || !password) {
+      throw new Error('Please fill in all fields');
+    }
+    try {
+      const response = await loginUser(data);
+      const { name, email, token } = response.data;
+      const userData = { name, email };
+      setUser(userData);
+      setToken(token);
+      localStorage.setItem('user', JSON.stringify(userData));
+      localStorage.setItem('token', token);
+    } catch (error) {
+      console.log('Error logging in', error);
+      throw new Error('Error logging in');
+    }   
   };
 
   const register = async (data: IUser) => {
