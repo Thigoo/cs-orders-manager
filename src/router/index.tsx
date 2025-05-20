@@ -5,7 +5,8 @@ import { EditOrdersView } from "@/views/orders/edit-orders.view";
 import { OrdersView } from "@/views/orders/orders.view";
 import { createBrowserRouter } from "react-router-dom";
 import { PrivateRoute } from "./private-route";
-import { LoginView } from "@/views/login/login.view";
+import { LoginView } from "@/views/auth/login.view";
+import { RegisterView } from "@/views/auth/register.view";
 
 export const router = createBrowserRouter([
   {
@@ -13,6 +14,7 @@ export const router = createBrowserRouter([
     element: <App />,
     children: [
       { path: "login", element: <LoginView /> },
+      { path: "register", element: <RegisterView /> },
       {
         path: "",
         element:

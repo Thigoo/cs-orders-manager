@@ -1,16 +1,46 @@
 import { ReactNode, useState } from "react";
 import { AuthContext } from "./AuthContext";
+import { registerUser } from "@/services/auth-service";
+
+export interface IUser {
+  name: string;
+  email: string;
+  password: string;
+}
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<string | null>(null);
+  const [user, setUser] = useState<{ name: string, email: string } | null>(() => {
+    const storedUser = localStorage.getItem('user');
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
+  const [token, setToken] = useState<string | null>(() => {
+    return localStorage.getItem('token');
+  });
 
   const login = async (username: string, password: string) => {
-    // Simulate login (replace with API call)
-    if (username === "admin" && password === "admin") {
-      setUser(username);
-      localStorage.setItem("user", username);
-    } else {
-      throw new Error("Invalid credentials");
+    console.log('username ->', username);
+    console.log('password ->', password);    
+  };
+
+  const register = async (data: IUser) => {
+    console.log('data ->', data);
+    const { name, email, password } = data;
+    if (!name || !email || !password) {
+      throw new Error('Please fill in all fields');
+    }
+    try {
+      const response = await registerUser(data);
+      const { name: resName, email: resEmail, token: resToken } = response.data;
+
+      const userData = { name: resName, email: resEmail };
+      setUser(userData);
+      setToken(resToken);
+      localStorage.setItem('user', JSON.stringify(userData));
+      localStorage.setItem('token', resToken);
+      console.log('response ->', response);
+    } catch (error) {
+      console.log('Error registering user', error);
+      throw new Error('Error registering user');
     }
   };
 
@@ -20,7 +50,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, token, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );
