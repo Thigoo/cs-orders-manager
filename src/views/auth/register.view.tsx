@@ -19,7 +19,7 @@ export const RegisterView = () => {
 
     try {
       await register({ name, email, password });
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       console.log("Error registering", error);
     }

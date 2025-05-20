@@ -23,7 +23,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const register = async (data: IUser) => {
-    console.log('data ->', data);
     const { name, email, password } = data;
     if (!name || !email || !password) {
       throw new Error('Please fill in all fields');
@@ -37,7 +36,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setToken(resToken);
       localStorage.setItem('user', JSON.stringify(userData));
       localStorage.setItem('token', resToken);
-      console.log('response ->', response);
     } catch (error) {
       console.log('Error registering user', error);
       throw new Error('Error registering user');
