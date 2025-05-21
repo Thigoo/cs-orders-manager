@@ -24,6 +24,10 @@ type TMenuData = {
 // This is sample data.
 const menuData: TMenuData = [
   {
+    title: "Home",
+    to: "/",
+  },
+  {
     title: "Orders",
     to: "/orders",
   },

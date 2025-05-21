@@ -7,6 +7,7 @@ import { createBrowserRouter } from "react-router-dom";
 import { PrivateRoute } from "./private-route";
 import { LoginView } from "@/views/auth/login.view";
 import { RegisterView } from "@/views/auth/register.view";
+import { HomeView } from "@/views/Home.view";
 
 export const router = createBrowserRouter([
   {
@@ -22,6 +23,7 @@ export const router = createBrowserRouter([
             <MainView />
           </PrivateRoute>,
         children: [
+          { path: "", element: <HomeView /> },
           {
             path: "orders",
             element: <OrdersView />,
