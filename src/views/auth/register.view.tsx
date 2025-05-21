@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/use-auth";
+import { toast } from "sonner";
 
 export const RegisterView = () => {
   const { register } = useAuth();
@@ -19,6 +20,7 @@ export const RegisterView = () => {
 
     try {
       await register({ name, email, password });
+      toast.success("Registration successful");
       navigate("/");
     } catch (error) {
       console.log("Error registering", error);

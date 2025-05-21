@@ -5,6 +5,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { Link, useNavigate } from "react-router-dom";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
+import { toast } from "sonner";
 
 export const LoginView = () => {
     const { login } = useAuth();
@@ -16,9 +17,11 @@ export const LoginView = () => {
         e.preventDefault();
         try {
             await login({ email, password });
+            toast.success('Login successful');
             navigate("/");
         } catch (error) {
             console.log('Invalid credentials', error);
+            toast.error('Invalid credentials');
         }
     };
 
